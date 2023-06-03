@@ -116,7 +116,7 @@ static Dictionary<DateTime, decimal> LoadExpensesFromFile(out decimal totalExpen
 
 static void SaveExpensesToFile(Dictionary<DateTime, decimal> expenses)
 {
-    DateTime nextMonth = DateTime.Today.AddMonths(1);
+    DateTime nextMonth = DateTime.Today.AddMonths(0);
     string fileName = $"expenses_{nextMonth:yyyy-MM}.txt";
     decimal totalExpense = 0;
     int currentMonth = -1;
@@ -199,7 +199,7 @@ static void CheckLastSavedExpenses()
     Console.Write("Do you want to check the change logs? ");
     userInput = Console.ReadLine();
 
-    if (userInput.ToLower() == "y")
+    if (userInput.ToLower() == "y" || userInput.ToLower() == "yes")
     {
         CheckVersion();
     }
@@ -224,7 +224,7 @@ static void CheckVersion()
 
         if (userInput.ToLower() == "end" || userInput.ToLower() == "exit")
         {
-            break;
+            Environment.Exit(0);
         }
         else
         {
@@ -238,13 +238,13 @@ static void CheckVersion()
 static void ChangeLogs()
 {
     Console.Clear();
-    Console.WriteLine("------------------------------------------------------");
+    Console.WriteLine("---------------------------------------------------------------------------------------------------");
     Console.WriteLine("\t\t\tChange logs");
-    Console.WriteLine("------------------------------------------------------");
+    Console.WriteLine("---------------------------------------------------------------------------------------------------");
     Console.WriteLine("May 12, 2023: First code create");
     Console.WriteLine("May 26, 2023: Adding the change logs");
-    Console.WriteLine("May 31, 2023: Automatic create a new text ");
-    Console.WriteLine("            : file every month ");
-    Console.WriteLine("------------------------------------------------------");
+    Console.WriteLine("May 31, 2023: Automatic create a new text file every month");
+    Console.WriteLine("            : Posting in the GitHub");
+    Console.WriteLine("---------------------------------------------------------------------------------------------------");
     Console.WriteLine("\n");
 }
