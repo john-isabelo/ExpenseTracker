@@ -50,7 +50,11 @@ CheckVersion();
 //Console.WriteLine("Press any key to exit.");
 //Console.ReadKey();
 
-
+/*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+.
+ * Method Name: LoadExpensesFromFile()
+ * Description: Loading the Expense from file
+ *              
+ *+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
 static Dictionary<DateTime, decimal> LoadExpensesFromFile(out decimal totalExpenseThisMonth)
 {
     string fileName = "expenses.txt";
@@ -114,6 +118,11 @@ static Dictionary<DateTime, decimal> LoadExpensesFromFile(out decimal totalExpen
 //    return expenses;
 //}
 
+/*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+.
+ * Method Name: SaveExpensesToFile()
+ * Description: Saves the expense into a txt file
+ *              
+ *+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
 static void SaveExpensesToFile(Dictionary<DateTime, decimal> expenses)
 {
     DateTime nextMonth = DateTime.Today.AddMonths(0);
@@ -143,6 +152,11 @@ static void SaveExpensesToFile(Dictionary<DateTime, decimal> expenses)
     }
 }
 
+/*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+.
+ * Method Name: SaveExpensesToFile()
+ * Description: Saves the expense into a txt file
+ *              
+ *+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
 static void ViewExpensesByMonth()
 {
     Console.Write("Enter the month (1-12):");
