@@ -143,6 +143,43 @@ static void SaveExpensesToFile(Dictionary<DateTime, decimal> expenses)
     }
 }
 
+static void ViewExpensesByMonth()
+{
+    Console.Write("Enter the month (1-12):");
+    int month = int.Parse(Console.ReadLine());
+
+    Console.Write("Enter the year:");
+    int year = int.Parse(Console.ReadLine());
+
+    string fileName = $"expenses_{year}-{month:D2}.txt";
+    Console.WriteLine("------------------------------------------------------");
+
+    try
+    {
+        Console.Clear();
+        string[] lines = File.ReadAllLines(fileName);
+
+        Console.WriteLine($"Expenses for {CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month)}, {year}:");
+        Console.WriteLine("----------------------");
+
+        foreach (string line in lines)
+        {
+            Console.WriteLine(line);
+        }
+        Console.WriteLine("Press 'ENTER' to go back to the menu screen");
+    }
+    catch (FileNotFoundException)
+    {
+        Console.WriteLine("File not found.");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred: {ex.Message}");
+    }
+}
+
+
+
 //static void SaveExpensesToFile(Dictionary<DateTime, decimal> expenses)
 //{
 //    string fileName = "expenses.txt";
@@ -216,23 +253,39 @@ static void CheckVersion()
     Console.WriteLine("------------------------------------------------------");
     Console.WriteLine("Welcome to the change logs"); 
     Console.WriteLine("------------------------------------------------------\n");
+    MainMenu();
 
     while (true)
     {
-        Console.Write("Enter a command (or 'end' to exit): ");
         string userInput = Console.ReadLine();
 
         if (userInput.ToLower() == "end" || userInput.ToLower() == "exit")
         {
             Environment.Exit(0);
         }
-        else
+        else if (userInput.ToLower() == "change logs")
         {
             Console.WriteLine("Executing command: " + userInput);
             // Add your code logic here for processing the user's command
             ChangeLogs();
         }
+        else if(userInput.ToLower() == "check months")
+        {
+            ViewExpensesByMonth();
+        }
+        else
+        {
+            CheckVersion();
+        }
     }
+}
+
+static void MainMenu()
+{
+    Console.WriteLine("Type 'end' or 'exit' to Terminate the program ");
+    Console.WriteLine("Type 'change logs' to see the change logs");
+    Console.WriteLine("Type 'check months' to check the previous months you want to see");
+    Console.Write("Command: ");
 }
 
 static void ChangeLogs()
@@ -241,10 +294,12 @@ static void ChangeLogs()
     Console.WriteLine("---------------------------------------------------------------------------------------------------");
     Console.WriteLine("\t\t\tChange logs");
     Console.WriteLine("---------------------------------------------------------------------------------------------------");
-    Console.WriteLine("May 12, 2023: First code create");
-    Console.WriteLine("May 26, 2023: Adding the change logs");
-    Console.WriteLine("May 31, 2023: Automatic create a new text file every month");
-    Console.WriteLine("            : Posting in the GitHub");
+    Console.WriteLine("May 12, 2023 : First code create");
+    Console.WriteLine("May 26, 2023 : Adding the change logs");
+    Console.WriteLine("May 31, 2023 : Automatic create a new text file every month");
+    Console.WriteLine("             : Posting in the GitHub");
+    Console.WriteLine("June 02, 2023: Adding new features. checking previous months");
     Console.WriteLine("---------------------------------------------------------------------------------------------------");
     Console.WriteLine("\n");
+    Console.WriteLine("Press 'ENTER' to go back to the menu screen");
 }
