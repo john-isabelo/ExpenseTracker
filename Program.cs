@@ -55,9 +55,11 @@ CheckVersion();
  * Description: Loading the Expense from file
  *              
  *+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
+
 static Dictionary<DateTime, decimal> LoadExpensesFromFile(out decimal totalExpenseThisMonth)
 {
-    string fileName = "expenses.txt";
+    DateTime currentDate = DateTime.Now;
+    string fileName = $"expenses_{currentDate:yyyy-MM}.txt";
     Dictionary<DateTime, decimal> expenses = new Dictionary<DateTime, decimal>();
     totalExpenseThisMonth = 0;
 
@@ -123,6 +125,99 @@ static Dictionary<DateTime, decimal> LoadExpensesFromFile(out decimal totalExpen
  * Description: Saves the expense into a txt file
  *              
  *+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
+
+//static void SaveExpensesToFile(Dictionary<DateTime, decimal> expenses)
+//{
+//    DateTime currentDate = DateTime.Now;
+//    string fileName = $"expenses_{currentDate:yyyy-MM}.txt";
+//    decimal totalExpense = 0;
+//    int currentMonth = -1;
+
+//    using (StreamWriter writer = new StreamWriter(fileName))
+//    {
+//        foreach (var expense in expenses)
+//        {
+//            if (expense.Key.Month != currentMonth)
+//            {
+//                if (currentMonth != -1)
+//                {
+//                    writer.WriteLine($"\t\t\tTotal Expense for {CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(currentMonth)}: {totalExpense.ToString("C")}");
+//                    totalExpense = 0;
+//                }
+//                currentMonth = expense.Key.Month;
+//            }
+
+//            writer.WriteLine($"{expense.Key.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}\t{expense.Value}");
+//            totalExpense += expense.Value;
+//        }
+//        writer.WriteLine("------------------------------------------------------");
+//        writer.Write($"Total Expense for {CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(currentMonth)}: {totalExpense.ToString("C")}");
+//    }
+
+//}
+
+static void SaveExpensesToFile(Dictionary<DateTime, decimal> expenses)
+{
+    DateTime currentDate = DateTime.Now;
+    string fileName = $"expenses_{currentDate:yyyy-MM}.txt";
+    decimal totalExpense = 0;
+    int currentMonth = -1;
+
+    using (StreamWriter writer = new StreamWriter(fileName))
+    {
+        writer.WriteLine($"Year: {currentDate.Year}");
+        writer.WriteLine($"Month: {CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(currentDate.Month)}");
+        writer.WriteLine();
+
+        foreach (var expense in expenses)
+        {
+            if (expense.Key.Month != currentMonth)
+            {
+                if (currentMonth != -1)
+                {
+                    writer.WriteLine($"\t\t\tTotal Expense for {CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(currentMonth)}: {totalExpense.ToString("C")}");
+                    totalExpense = 0;
+                }
+                currentMonth = expense.Key.Month;
+            }
+
+            writer.WriteLine($"{expense.Key.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}\t{expense.Value}");
+            totalExpense += expense.Value;
+        }
+        writer.WriteLine("------------------------------------------------------");
+        writer.Write($"Total Expense for {CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(currentMonth)}: {totalExpense.ToString("C")}");
+    }
+}
+
+//static void SaveExpensesToFile(Dictionary<DateTime, decimal> expenses)
+//{
+//    string fileName = "expenses.txt";
+//    decimal totalExpense = 0;
+//    int currentMonth = -1;
+
+//    using (StreamWriter writer = new StreamWriter(fileName))
+//    {
+//        foreach (var expense in expenses)
+//        {
+//            if (expense.Key.Month != currentMonth)
+//            {
+//                if (currentMonth != -1)
+//                {
+//                    writer.WriteLine($"\t\t\tTotal Expense for {CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(currentMonth)}: {totalExpense.ToString("C")}");
+//                    totalExpense = 0;
+//                }
+//                currentMonth = expense.Key.Month;
+//            }
+
+//            writer.WriteLine($"{expense.Key.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}\t{expense.Value}");
+//            totalExpense += expense.Value;
+//        }
+//        writer.WriteLine("------------------------------------------------------");
+//        writer.Write($"Total Expense for {CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(currentMonth)}: {totalExpense.ToString("C")}");
+//    }
+
+//}
+/*
 static void SaveExpensesToFile(Dictionary<DateTime, decimal> expenses)
 {
     DateTime nextMonth = DateTime.Today.AddMonths(0);
@@ -151,6 +246,7 @@ static void SaveExpensesToFile(Dictionary<DateTime, decimal> expenses)
         writer.Write($"Total Expense for {CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(currentMonth)}: {totalExpense.ToString("C")}");
     }
 }
+*/
 
 /*+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+.
  * Method Name: SaveExpensesToFile()
